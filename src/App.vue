@@ -1,12 +1,14 @@
 <template>
-  <Skills></Skills>
+  <div id='app'>
+    <Skills />
+  </div>
 </template>
 
 <script>
-
+import Skills from './components/Skills.vue'
 
 export default {
-  name: 'Skills',
+  name: 'app',
   components: {
     Skills
   }
