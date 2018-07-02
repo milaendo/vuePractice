@@ -1,14 +1,14 @@
 <template>
-
+  <Skills></Skills>
 </template>
 
 <script>
 
 
 export default {
-  name: 'app',
+  name: 'Skills',
   components: {
-
+    Skills
   }
 }
 </script>
