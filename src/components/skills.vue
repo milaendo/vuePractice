@@ -3,7 +3,9 @@
     <div class="holder">
       <form @submit.prevent="addSkill">
         <input type="text" placeholder="Enter a skill you have.." v-model="skill" v-validate="'min:5'" name="skill">
-        <p class="alert" v-if="errors.has('skill')">{{ errors.first('skill') }}</p>
+        <transition name="alert-in" enter-active-class="animated filpInX" leave-active-class="animated flipOutX">
+          <p class="alert" v-if="errors.has('skill')">{{ errors.first('skill') }}</p>
+        </transition>
       </form>
       <ul>
         <li v-for="(data, index) in skills" :key='index'>{{ data.skill }}</li>
@@ -27,14 +29,20 @@ export default{
   },
   methods: {
     addSkill(){
-      this.skills.push({skill: this.skill})
-      this.skill = ''
+      this.$validator.validateAll().then((result) => {
+        if(result){
+          this.skills.push({skill: this.skill})
+          this.skill = ''
+        }
+      })
     }
   }
 }
 </script>
 
 <style scoped>
+@import "https://cdn.jsdelivr.net/npm/animate.css@3.5.1";
+
 .holder {
   background: #fff;
 }
@@ -71,5 +79,32 @@ input {
   font-size: 1.3em;
   background-color: #323333;
   color: #687F7F;
+}
+.alert {
+  background: #fdf2ce;
+  font-weight: bold;
+  display: inline-block;
+  padding: 5px;
+  margin-top: -20px;
+}
+
+.alert-in-enter-active {
+  animation: bounce-in .5s;
+}
+
+.alert-in-leave-active {
+  animation: bounce-in .5s reverse;
+}
+
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 </style>
