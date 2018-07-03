@@ -2,8 +2,8 @@
   <div class="Skills">
     <div class="holder">
       <form @submit.prevent="addSkill">
-        <input type="text" placeholder="Enter a skill you have.." v-model="skill">
-        {{ skill }}
+        <input type="text" placeholder="Enter a skill you have.." v-model="skill" v-validate="'min:5'" name="skill">
+        <p class="alert" v-if="errors.has('skill')">{{ errors.first('skill') }}</p>
       </form>
       <ul>
         <li v-for="(data, index) in skills" :key='index'>{{ data.skill }}</li>
